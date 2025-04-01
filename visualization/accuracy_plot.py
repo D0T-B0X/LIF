@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import plotly.io as pio
 import pandas as pd
+import numpy as np
 
 df = pd.read_csv("../data/accuracy.csv")
 
@@ -17,6 +18,7 @@ fig.add_trace(
         y=error,
         mode="lines+markers",
         name="Error %",
+        line_shape='spline',
         line=dict(
             color="red",
             width=4
@@ -79,9 +81,11 @@ fig2.add_trace(
 fig2.update_layout(
     title=dict(text="Value vs. Approximation", font=dict(size=50), automargin=True),
     xaxis=dict(title="Node Value"),
-    yaxis=dict(title="Values & Approximations"),
+    yaxis=dict(
+        title="Values & Approximations",
+        type="log"
+    ),
     font=dict(size=30, color="green"),
-    yaxis_type="log",
     legend=dict(title=dict(text="Type")),
     template="plotly_dark",
     hovermode="x unified"
