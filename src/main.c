@@ -32,16 +32,6 @@ int main(void) {
     // in the pre defined arrays
     get_nodes_values(nodes, values);
 
-    // debugging
-    printf("nodes: \n");
-    for(int i = 0; i < size; i++) {
-        printf("%d\n", *(nodes + i));
-    }
-    printf("values: \n");
-    for(int i = 0; i < size; i++) {
-        printf("%.3lf\n", values[i]);
-    }
-
     // calculate the approximate value at the target node
     double approximation = lagrange_interpolation(nodes, values, target, size);
 
