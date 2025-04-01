@@ -33,9 +33,8 @@ fig.add_trace(
 fig.update_layout(
     title=dict(text="Lagrange Interpolation Inaccuracy", font=dict(size=50), automargin=True),
     xaxis=dict(title="Node Value"),
-    yaxis=dict(title="Error %"),
+    yaxis=dict(title="Error %", type="log"),
     font=dict(size=30),
-    yaxis_type="log",
     template="plotly_dark",
     hovermode="x unified"
 )
