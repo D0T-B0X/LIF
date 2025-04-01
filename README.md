@@ -42,7 +42,7 @@ First cd into the `visualization` directory:
 cd {HOME_DIRECTORY}/visualization
 ```
 
-Then create and activate a virtual environment and activate it.
+Then create and activate a virtual environment.
 
 ```
 python -m venv .venv
