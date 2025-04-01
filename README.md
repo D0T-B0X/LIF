@@ -42,10 +42,16 @@ First cd into the `visualization` directory:
 cd {HOME_DIRECTORY}/visualization
 ```
 
-Then create and activate a virtual environment and install the required packages
+Then create and activate a virtual environment and activate it.
 
 ```
 python -m venv .venv
+source .venv/bin/activate
+```
+
+Install the required packages
+
+```
 pip install -r requirements.txt
 ```
 
