@@ -6,6 +6,7 @@ double lagrange_interpolation(int* nodes, double* values, int target, int nLengt
 void get_nodes_values(int* nodes, double* values);
 int parse_node(char* node);
 double parse_value(char *value);
+void add_approximation(int target, double accuracy, int first, double value, double approx);
 
 int main(void) {
 
@@ -16,9 +17,9 @@ int main(void) {
     scanf("%d", &size);
 
     // take the target node as user input
-    int target;
-    printf("Enter target node: ");
-    scanf("%d", &target);
+    // int target;
+    // printf("Enter target node: ");
+    // scanf("%d", &target);
 
     // dynamically allocate memory for nodes and values
     int* nodes = (int *)malloc(size * sizeof(int));
@@ -32,10 +33,24 @@ int main(void) {
     // in the pre defined arrays
     get_nodes_values(nodes, values);
 
-    // calculate the approximate value at the target node
-    double approximation = lagrange_interpolation(nodes, values, target, size);
+    int first = 1;
 
-    printf("The approximate value at [%d] is: %.3lf\n", target, approximation);
+    for(int i = 0; i < size; i++) {
+        if(i > 0) first = 0;
+
+        double approx = lagrange_interpolation(nodes, values, i, size);
+        double error = ((values[i] - approx) / values[i]) * 100;
+
+        if(error < 0) error *= -1.0f;
+        if(approx < 0) approx *= -1.0f;
+               
+        add_approximation(i, error, first, values[i], approx);
+    }
+
+    // calculate the approximate value at the target node
+    // double approximation = lagrange_interpolation(nodes, values, target, size);
+
+    // printf("The approximate value at [%d] is: %.3lf\n", target, approximation);
 
     // free memory to prevent leaks
     free(nodes);
@@ -53,8 +68,11 @@ Function Parameters:
 */
 double lagrange_interpolation(int* nodes, double* values, int target, int nLength) {
     double phiX = 0;
+    int targetVal = nodes[target];
 
     for(int i = 0; i < nLength; i++) {
+        if(i == target) continue;
+
         double numerator = 1.0f;
         double denominator = 1.0f;
 
@@ -62,10 +80,11 @@ double lagrange_interpolation(int* nodes, double* values, int target, int nLengt
             // if x = i, then skip iteration, removing 
             // this will cause a divide by zero error
             if(x == i) continue;
+            if(x == target) continue;
 
             // numerator is the product of
             // target x value - the nodes
-            numerator *= target - nodes[x];
+            numerator *= targetVal - nodes[x];
 
             // denominator is the product of 
             // each node - the other nodes
@@ -258,4 +277,27 @@ double parse_value(char* value) {
     }
 
     return num;
+}
+
+void add_approximation(int target, double accuracy, int first, double value, double approx) {
+    
+    FILE* file;
+
+    file = fopen("../data/accuracy.csv", "a");
+    if(file == NULL) {
+        printf("File failed to open\n");
+        exit(1);
+    }
+
+    if(first) {
+        file = fopen("../data/accuracy.csv", "w");
+        if(file == NULL) {
+            printf("File failed to open");
+            exit(1);
+        }
+    }
+
+    if(first) fprintf(file, "nodes,error,value,approx\n%d,%.15lf,%.4lf,%.4lf\n", target, accuracy, value, approx);
+    else fprintf(file, "%d,%.15lf,%.4lf,%.4lf\n", target, accuracy, value, approx);
+    fclose(file);
 }
