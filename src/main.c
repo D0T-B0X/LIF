@@ -42,7 +42,7 @@ int main(void) {
             if(fabs(approx) < 1e-14) error = 0.0f;
             else error = fabs(approx) * 100.0f;
         }
-        else error = fabs(1 - (approx / values[i]) * 100.0f);
+        else error = fabs((1 - (approx / values[i])) * 100.0f);
         
         add_approximation(nodes[i], error, first, values[i], approx);
     }
