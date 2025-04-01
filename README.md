@@ -6,6 +6,7 @@ Langrange Interpolating Formula. This program uses the Lagrange Interpolating Fo
 
 - A linux system
 - Cmake ^3.10
+- python 3
 
 ## How do I run it on my system?
 
@@ -31,5 +32,27 @@ cd build/
 ```
 
 You should now have a working Lagrange Interpolating Formula Function!
+
+## Error Visualization
+
+To create plots of the error % and true value vs approximation deviation:
+First cd into the `visualization` directory:
+
+```
+cd {HOME_DIRECTORY}/visualization
+```
+
+Then create and activate a virtual environment and install the required packages
+
+```
+python -m venv .venv
+pip install -r requirements.txt
+```
+
+Now, simply run the python script and the plots will be saved in `{HOME_DIRECTORY}/visualization/plots/`
+
+```
+python3 accuracy_plot.py
+```
 
 <code>!! If you are on a windows system, make sure cmake is installed and edit `CMakeLists.txt` to use windows path syntax !!</code>
