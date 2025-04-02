@@ -3,6 +3,7 @@ import plotly.io as pio
 import pandas as pd
 import numpy as np
 
+# approximation csv
 df = pd.read_csv("../data/accuracy.csv")
 
 df["approx"] = pd.to_numeric(df["approx"], errors="coerce")
@@ -14,6 +15,15 @@ approx: float = df["approx"]
 value: float = df["value"]
 nodes: float = df["nodes"]
 error: float = df["error"]
+
+# true value csv
+df_true = pd.read_csv("../data/nodes_values_true.csv")
+
+df_true["y"] = pd.to_numeric(df_true["y"], errors="coerce")
+df_true["x"] = pd.to_numeric(df_true["x"], errors="coerce")
+
+value_true: float = df_true["y"]
+nodes_true: float = df_true["x"]
 
 fig = go.Figure()
 
@@ -50,10 +60,11 @@ fig2 = go.Figure()
 
 fig2.add_trace(
     go.Scatter(
-        x=nodes,
-        y=value,
+        x=nodes_true,
+        y=value_true,
         mode="lines+markers",
         name="Values",
+        line_shape='spline',
         line=dict(
             color="red",
             width=4
@@ -71,6 +82,7 @@ fig2.add_trace(
         y=approx,
         mode="lines+markers",
         name="Approximations",
+        line_shape='spline',
         line=dict(
             color="purple",
             width=4
@@ -103,10 +115,11 @@ fig3 = go.Figure()
 
 fig3.add_trace(
     go.Scatter(
-        x=nodes,
-        y=value,
+        x=nodes_true,
+        y=value_true,
         mode="lines+markers",
         name="Values",
+        line_shape='spline',
         line=dict(
             color="red",
             width=4
@@ -118,11 +131,17 @@ fig3.add_trace(
     )
 )
 
+range_val = [0, 1.1]
+
 fig3.update_layout(
     title=dict(text="Nodes and Values", font=dict(size=50), automargin=True),
-    xaxis=dict(title="Node"),
+    xaxis=dict(
+        title="Node",
+        range=[-1, 1]
+    ),
     yaxis=dict(
         title="Values",
+        range=range_val
     ),
     font=dict(size=30, color="white"),
     legend=dict(title=dict(text="Type")),

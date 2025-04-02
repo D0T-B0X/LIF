@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void get_nodes_values(float* nodes, double* values) {
+void get_nodes_values(float* nodes, double* values, const char* filepath) {
     
     // file pointer
     FILE* file;
 
     // open csv file in parent/data/
-    file = fopen("../data/nodes_values.csv", "r");
+    file = fopen(filepath, "r");
     if(file == NULL) {
         printf("File failed to open\n");
         exit(1);
@@ -167,19 +167,19 @@ double parse_number(char* value) {
     return num;
 }
 
-void add_approximation(float target, double accuracy, int first, double value, double approx) {
+void add_approximation(float target, double accuracy, int first, double value, double approx, const char* filepath) {
     
     FILE* file;
 
     // opens file in append mode for non first iterations
     if(!first){
-        file = fopen("../data/accuracy.csv", "a");
+        file = fopen(filepath, "a");
         if(file == NULL) {
             printf("File failed to open\n");
             exit(1);
         }
      } else { // delete any old data on the first iteration and start anew
-        file = fopen("../data/accuracy.csv", "w");
+        file = fopen(filepath, "w");
         if(file == NULL) {
             printf("File failed to open");
             exit(1);

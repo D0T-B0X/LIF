@@ -1,16 +1,20 @@
 #ifndef CSV_UTILS_H
 #define CSV_UTILS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-
+/* nodes and values extraction
+Function Parameters:
+[int* nodes]:     integer array that will store all nodes
+                  should be pre defined. (obvious)
+[double* values]: double array that will stores all values
+                  should also be pre defined.
+*/
 /**
  * Reads nodes and values from a CSV file
  * @param nodes Array to store node values
  * @param values Array to store function values
  * @param size Number of nodes to read
  */
-void get_nodes_values(float* nodes, double* values);
+void get_nodes_values(float* nodes, double* values, const char* filepath);
 
 /**
  * Adds interpolation results to a CSV file for visualization
@@ -20,7 +24,7 @@ void get_nodes_values(float* nodes, double* values);
  * @param value Actual function value
  * @param approx Approximated value from interpolation
  */
-void add_approximation(float target, double accuracy, int first, double value, double approx);
+void add_approximation(float target, double accuracy, int first, double value, double approx, const char* filepath);
 
 /**
  * Parses a string to a floating-point number

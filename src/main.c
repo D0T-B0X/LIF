@@ -10,13 +10,13 @@ int main(void) {
 
     // take size of the data 
     // (number of nodes) as user input
-    int size;
-    printf("How many nodes does your datasheet have: ");
-    scanf("%d", &size);
+    int size_approx;
+    printf("How many nodes does your interpolation datasheet have: ");
+    scanf("%d", &size_approx);
 
     // dynamically allocate memory for nodes and values
-    float* nodes = (float *)malloc(size * sizeof(float));
-    double* values = (double *)malloc(size * sizeof(double));
+    float* nodes = (float *)malloc(size_approx * sizeof(float));
+    double* values = (double *)malloc(size_approx * sizeof(double));
     if(nodes == NULL || values == NULL) {
         printf("Memory allocation failed\n");
         return -1;
@@ -24,7 +24,7 @@ int main(void) {
 
     // extract nodes and values and insert them
     // in the pre defined arrays
-    get_nodes_values(nodes, values);
+    get_nodes_values(nodes, values, "../data/nodes_values.csv");
 
     // flag to check for first iteration in csv creation
     int first = 1;
@@ -32,10 +32,10 @@ int main(void) {
     // this for loop adds an entry for every node in the range
     // and calculates its approximate value and error percentage
     // it then adds those values in a new csv file for visualization
-    for(int i = 0; i < size; i++) {
+    for(int i = 0; i < size_approx; i++) {
         if(i > 0) first = 0;
 
-        double approx = lagrange_interpolation(nodes, values, i, size);
+        double approx = lagrange_interpolation(nodes, values, i, size_approx);
         double error;
 
         if(fabs(values[i]) < 1e-14) {
@@ -44,7 +44,7 @@ int main(void) {
         }
         else error = fabs((1 - (approx / values[i])) * 100.0f);
         
-        add_approximation(nodes[i], error, first, values[i], approx);
+        add_approximation(nodes[i], error, first, values[i], approx, "../data/accuracy.csv");
     }
 
     // free memory to prevent leaks
@@ -96,11 +96,3 @@ double lagrange_interpolation(float* nodes, double* values, int target, int nLen
 
     return phiX;
 }
-
-/* nodes and values extraction
-Function Parameters:
-[int* nodes]:     integer array that will store all nodes
-                  should be pre defined. (obvious)
-[double* values]: double array that will stores all values
-                  should also be pre defined.
-*/
