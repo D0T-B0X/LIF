@@ -3,7 +3,14 @@
 #include <stdlib.h>
 #include <math.h>
 
-// function description after the main function
+/**
+ * Largrange Interpolation Function
+ * @param nodes Array to store node values
+ * @param values Array that stores functional values at node
+ * @param target Node at which approximation is made
+ * @param nLength Total number of nodes in the dataset
+ * @return Interpolated Approximation at target node
+ */
 double lagrange_interpolation(float* nodes, double* values, int target, int nLength);
 
 int main(void) {
@@ -53,14 +60,6 @@ int main(void) {
     return 0;
 }
 
-/* largrange interpolation function
-Function Parameters:
-[int* nodes]:     This array of integers should have all the nodes/arguments
-[double* values]: An array of type double that should have the respective y
-                  values for the given x values in 'nodes'
-[int target]:     The position for which the approximation needs to be made
-[int nLength]:    The total number of nodes given for this approximation
-*/
 double lagrange_interpolation(float* nodes, double* values, int target, int nLength) {
     double phiX = 0;
     float targetNode = nodes[target];

@@ -1,13 +1,6 @@
 #ifndef CSV_UTILS_H
 #define CSV_UTILS_H
 
-/* nodes and values extraction
-Function Parameters:
-[int* nodes]:     integer array that will store all nodes
-                  should be pre defined. (obvious)
-[double* values]: double array that will stores all values
-                  should also be pre defined.
-*/
 /**
  * Reads nodes and values from a CSV file
  * @param nodes Array to store node values
