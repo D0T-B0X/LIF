@@ -11,7 +11,7 @@
  * @param nLength Total number of nodes in the dataset
  * @return Interpolated Approximation at target node
  */
-double lagrange_interpolation(float* nodes, double* values, int target, int nLength);
+double lagrange_interpolation(double* nodes, double* values, int target, int nLength);
 
 int main(void) {
 
@@ -22,7 +22,7 @@ int main(void) {
     scanf("%d", &size_approx);
 
     // dynamically allocate memory for nodes and values
-    float* nodes = (float *)malloc(size_approx * sizeof(float));
+    double* nodes = (double *)malloc(size_approx * sizeof(double));
     double* values = (double *)malloc(size_approx * sizeof(double));
     if(nodes == NULL || values == NULL) {
         printf("Memory allocation failed\n");
@@ -45,11 +45,11 @@ int main(void) {
         double approx = lagrange_interpolation(nodes, values, i, size_approx);
         double error;
 
-        if(fabs(values[i]) < 1e-14) {
-            if(fabs(approx) < 1e-14) error = 0.0f;
-            else error = fabs(approx) * 100.0f;
+        if(fabs(values[i]) < 1e-16) {
+            if(fabs(approx) < 1e-16) error = 0.0;
+            else error = fabs(approx) * 100.0;
         }
-        else error = fabs((1 - (approx / values[i])) * 100.0f);
+        else error = fabs((1 - (approx / values[i])) * 100.0);
         
         add_approximation(nodes[i], error, first, values[i], approx, "../data/accuracy.csv");
     }
@@ -60,20 +60,20 @@ int main(void) {
     return 0;
 }
 
-double lagrange_interpolation(float* nodes, double* values, int target, int nLength) {
+double lagrange_interpolation(double* nodes, double* values, int target, int nLength) {
     double phiX = 0;
-    float targetNode = nodes[target];
+    double targetNode = nodes[target];
 
     for(int i = 0; i < nLength; i++) {
-        if(nodes[i] == targetNode) continue;
+        if(i == target) continue;
 
-        double numerator = 1.0f;
-        double denominator = 1.0f;
+        double numerator = 1.0;
+        double denominator = 1.0;
 
         for(int x = 0; x < nLength; x++) {
             // if x = i, then skip iteration, removing 
             // this will cause a divide by zero error
-            if(x == i || nodes[x] == targetNode) continue;
+            if(x == i || fabs(nodes[x] - targetNode) < 1e-15) continue;
 
             // numerator is the product of
             // target x value - the nodes

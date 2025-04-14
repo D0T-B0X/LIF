@@ -7,7 +7,7 @@
  * @param values Array to store function values
  * @param size Number of nodes to read
  */
-void get_nodes_values(float* nodes, double* values, const char* filepath);
+void get_nodes_values(double* nodes, double* values, const char* filepath);
 
 /**
  * Adds interpolation results to a CSV file for visualization
@@ -17,7 +17,7 @@ void get_nodes_values(float* nodes, double* values, const char* filepath);
  * @param value Actual function value
  * @param approx Approximated value from interpolation
  */
-void add_approximation(float target, double accuracy, int first, double value, double approx, const char* filepath);
+void add_approximation(double target, double accuracy, int first, double value, double approx, const char* filepath);
 
 /**
  * Parses a string to a floating-point number

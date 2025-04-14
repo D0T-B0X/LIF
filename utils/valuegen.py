@@ -18,7 +18,7 @@ df_approx = pd.DataFrame({
     'y': values_approx
 })
 
-df_approx.to_csv("../data/nodes_values.csv", index=False, float_format='%.10f')
+df_approx.to_csv("../data/nodes_values.csv", index=False, float_format='%.16f')
 
 nodes_true: float = np.linspace(START_NODE, END_NODE, NODE_COUNT_TRUE)
 values_true: float = []

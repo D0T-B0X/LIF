@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void get_nodes_values(float* nodes, double* values, const char* filepath) {
+void get_nodes_values(double* nodes, double* values, const char* filepath) {
     
     // file pointer
     FILE* file;
@@ -76,7 +76,7 @@ void get_nodes_values(float* nodes, double* values, const char* filepath) {
             }
             nodeStr = temp;
             // get the numerical value out of the node string
-            float node = (float)parse_number(nodeStr);
+            double node = parse_number(nodeStr);
             // add that numerical value to the nodes array
             nodes[nCount++] = node;
             isNode = 0;
@@ -134,9 +134,9 @@ void get_nodes_values(float* nodes, double* values, const char* filepath) {
 }
 
 double parse_number(char* value) {
-    double num = 0.0f;
+    double num = 0.0;
     int isDec = 0;
-    double dec = 0.1f;
+    double dec = 0.1;
     int isNeg = 0;
 
     if(value[0] == '-') isNeg = 1;
@@ -153,7 +153,7 @@ double parse_number(char* value) {
             // if decimal section then parse accordingly
             if(isDec) {
                 num = num + (dig * dec);
-                dec *= 0.1f;
+                dec *= 0.1;
             } else { // normal parsing for integer section of the number
                 num = (num * 10) + dig;
             }
@@ -162,12 +162,12 @@ double parse_number(char* value) {
 
     // if a '-' is the first character
     // then the number is made negative
-    if(isNeg) num *= -1.0f;
+    if(isNeg) num *= -1.0;
 
     return num;
 }
 
-void add_approximation(float target, double accuracy, int first, double value, double approx, const char* filepath) {
+void add_approximation(double target, double accuracy, int first, double value, double approx, const char* filepath) {
     
     FILE* file;
 
@@ -188,7 +188,7 @@ void add_approximation(float target, double accuracy, int first, double value, d
 
     // adds csv labels on the first iteration and following values
     // for the remaining iterations
-    if(first) fprintf(file, "nodes,error,value,approx\n%.3f,%.15lf,%.15lf,%.15lf\n", target, accuracy, value, approx);
-    else fprintf(file, "%.3f,%.15lf,%.15lf,%.15lf\n", target, accuracy, value, approx);
+    if(first) fprintf(file, "nodes,error,value,approx\n%.15f,%.15lf,%.15lf,%.15lf\n", target, accuracy, value, approx);
+    else fprintf(file, "%.15f,%.15lf,%.15lf,%.15lf\n", target, accuracy, value, approx);
     fclose(file);
 }
